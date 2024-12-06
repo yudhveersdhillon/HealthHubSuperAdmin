@@ -84,6 +84,7 @@ export class LayoutComponent implements OnInit {
     localStorage.removeItem('token');
     // sessionStorage.removeItem("Token");
     this.router.navigateByUrl('/login');
+    console.log("")
   }
 
   toggle() {
