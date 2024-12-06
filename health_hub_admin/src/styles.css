@@ -1,0 +1,102 @@
+.sub-heading {
+  font-family: "Montserrat", sans-serif !important;
+  font-optical-sizing: auto;
+  font-weight: 700 !important;
+  font-style: normal !important;
+  font-size: 1.15rem !important;
+}
+
+.ngx-pagination .current {
+  padding: 0.1875rem 0.625rem;
+  color: #fefefe;
+  cursor: default;
+}
+
+.pagination {
+  justify-content: end !important;
+}
+
+.point {
+  cursor: pointer;
+}
+.nb-theme-default [nbInput].size-medium:not(.input-full-width){
+    max-width: unset !important;
+}
+
+.angular-editor .angular-editor-wrapper .angular-editor-textarea {
+  min-height: 15rem !important;
+  padding: 0.5rem 0.8rem 1rem;
+  border: 1px solid #ddd;
+  background-color: #f7f9fc !important;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+}
+
+:host nb-layout-header button:last-child {
+  margin-left: auto;
+}
+
+img {
+  margin-left: -5px;
+}
+
+.dummypic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.colored-column-warning {
+  margin: 0;
+}
+
+
+
+.nb-theme-default.nb-sidebar nb-sidebar-header {
+  margin-bottom: -28px;
+}
+
+nb-menu.menu-item {
+  border-bottom: none;
+}
+
+nb-menu.menu-item {
+  border-bottom: none;
+}
+
+
+
+.nb-theme-default nb-menu .menu-item a::after {
+  background-color: #e6eefe;
+}
+
+nb-sidebar.expanded {
+  box-shadow: none;
+}
+
+nb-layout-header > nav {
+  box-shadow: none;
+}
+
+.navText {
+  cursor: pointer;
+  margin-bottom: 0px;
+}
+
+@media screen and (max-width: 768) {
+  .iconDisplay {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768) {
+  .iconDisplay {
+    display: inline-block;
+  }
+}
+
+.mat-mdc-dialog-container.mdc-dialog__surface {
+  border-radius: var(--mdc-dialog-container-shape, 4px);
+  background-color: white !important;
+}

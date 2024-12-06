@@ -1,0 +1,24 @@
+<nb-layout>
+    <nb-layout-header fixed>
+        <div class="main">
+            <div class="col-12 col-md-12 col-sm-12 col-xl-12 col-lg-12" style="margin-left: 25px;">
+                <img src="assets/logo2.png" width="60px" style="cursor: pointer; " [routerLink]="['']">
+
+                <nb-icon icon="menu-outline" style="text-align: start; width: 2em;" class="iconDisplay"
+                    (click)="toggle()">Toggle</nb-icon>
+
+            </div>
+
+        </div>
+    </nb-layout-header>
+    <nb-sidebar class="left" tag="left" start responsive="true" [state]="'expanded'" [compactedBreakpoints]="[]"
+        [collapsedBreakpoints]="['xs', 'is', 'sm','md']">
+        <nb-menu [items]="menu" tag="leftSideBar">
+        </nb-menu>
+    </nb-sidebar>
+
+    <nb-layout-column class="colored-column-warning" style="background-color: #F5F5F5;">
+        <router-outlet></router-outlet>
+    </nb-layout-column>
+
+</nb-layout>
