@@ -1,5 +1,8 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import {
+  BrowserModule,
+  provideClientHydration,
+} from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -7,7 +10,18 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HospitalComponent } from './components/hospital/hospital.component';
 import { DoctorsComponent } from './components/doctors/doctors.component';
+import { PatientComponent } from './components/patient/patient.component';
+import { LoginComponent } from './components/login/login.component';
 
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  provideHttpClient,
+  withFetch,
+} from '@angular/common/http';
+import { AuthInterceptor } from './auth.interceptor';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   NbActionsModule,
   NbAlertModule,
@@ -27,7 +41,9 @@ import {
   NbThemeModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { PatientComponent } from './components/patient/patient.component';
+import { ToastrModule } from 'ngx-toastr';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -37,9 +53,13 @@ import { PatientComponent } from './components/patient/patient.component';
     HospitalComponent,
     DoctorsComponent,
     PatientComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormsModule,
     AppRoutingModule,
     NbThemeModule.forRoot(),
     NbSidebarModule.forRoot(),
@@ -47,8 +67,28 @@ import { PatientComponent } from './components/patient/patient.component';
     NbEvaIconsModule,
     NbIconModule,
     NbLayoutModule,
+    NbInputModule,
+    ToastrModule.forRoot({
+      preventDuplicates: true,
+      countDuplicates: true,
+      positionClass: 'toast-top-right',
+      timeOut: 2000,
+    }),
+    NgxPaginationModule,
+    NgxSpinnerModule,
   ],
-  providers: [],
+  providers: [
+    provideClientHydration(),
+    provideHttpClient(withFetch()),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+    NbMenuService,
+    NbSidebarService,
+  ],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}
