@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-6">
+    <div class="col-sm-6">
         <h2>Hospitals</h2>
     </div>
     <div class="col-sm-4">
@@ -12,51 +12,65 @@
     </div>
 
 </div>
-<div class="col-12" style="margin-top: 20px;">
-    <nb-card>
-        <nb-card-body>
-            <table class="table text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">S.No</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Phone No.</th>
-                        <th scope="col">Profile Image</th>
-                        <th scope="col">Role</th>
-                        <th scope="col">Action</th>
-                        <!-- <th scope="col">Store Id</th> -->
+<div class="row">
+    <div class="col-12" style="margin-top: 20px;">
+        <nb-card>
+            <nb-card-body>
+                <table class="table text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">S.No</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Profile Image</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone No.</th>
+                            <th scope="col">Website</th>
+                            <th scope="col">Total Beds</th>
+                            <th scope="col">Departments</th>
+                            <th scope="col">Ipd</th>
+                            <th scope="col">Pharmacy</th>
+                            <th scope="col">Lab</th>
+                            <th scope="col">Action</th>
+                            <!-- <th scope="col">Store Id</th> -->
 
-                    </tr>
-                </thead>
-                <tbody *ngIf="hospitals && hospitals.length > 0; else noDataTemplate">
-                    <tr
-                        *ngFor="let user of hospitals | paginate: { itemsPerPage: 10, currentPage: page, totalItems: total }; let i = index">
-                        <td>{{ (page - 1) * count + i + 1 }}</td>
-                        <td>{{ user.name }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>{{ user.phone }}</td>
-                        <td><img [src]="imagePath + user.profileImage" height="50" /></td>
-                        <td>{{ user.role }}</td>
-                        <td>
-                            <nb-icon style="cursor: pointer;" (click)="editAdmin(user._id)" class="right"
-                                icon="edit-outline"></nb-icon>
-                            <nb-icon style="cursor: pointer;" (click)="deleteAdmin(user._id)" class="right deleteIcon"
-                                icon="trash-outline"></nb-icon>
-                        </td>
-                    </tr>
-                </tbody>
-                <ng-template #noDataTemplate>
-                    <tr>
-                        <td colspan="8" class="text-center">No data found</td>
-                    </tr>
-                </ng-template>
-            </table>
-            <pagination-controls class="pagination" [responsive]="true" (pageChange)="pageChanged($event)"
-                previousLabel="Prev" nextLabel="Next"></pagination-controls>
-        </nb-card-body>
-    </nb-card>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="hospitals && hospitals.length > 0; else noDataTemplate">
+                        <tr
+                            *ngFor="let user of hospitals | paginate: { itemsPerPage: 10, currentPage: page, totalItems: total }; let i = index">
+                            <td>{{ (page - 1) * count + i + 1 }}</td>
+                            <td>{{ user.name }}</td>
+                            <td><img [src]="imagePath + user.profileImage" height="50" /></td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.contactNumber }}</td>
+                            <td>{{ user.website }}</td>
+                            <td>{{ user.totalBeds }}</td>
+                            <td>{{ user.departments }}</td>
+                            <td>{{ user.ipd }}</td>
+                            <td>{{ user.pharmacy }}</td>
+                            <td>{{ user.lab }}</td>
+                            <td>
+                                <nb-icon style="cursor: pointer;" (click)="editAdmin(user._id)" class="right"
+                                    icon="edit-outline"></nb-icon>
+                                <nb-icon style="cursor: pointer;" (click)="deleteAdmin(user._id)"
+                                    class="right deleteIcon" icon="trash-outline"></nb-icon>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <ng-template #noDataTemplate>
+                        <tr>
+                            <td colspan="8" class="text-center">No data found</td>
+                        </tr>
+                    </ng-template>
+                </table>
+                <pagination-controls class="pagination" [responsive]="true" (pageChange)="pageChanged($event)"
+                    previousLabel="Prev" nextLabel="Next"></pagination-controls>
+            </nb-card-body>
+        </nb-card>
+    </div>
 </div>
+
+
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" [fullScreen]="true" color="white" type="ball-circus"
     [fullScreen]="true">
     <p style="color: white"> Loading... </p>

@@ -1,0 +1,155 @@
+<div class="row">
+    <div class="col-6">
+        <h2>{{ buttonTitle }}</h2>
+    </div>
+    <div class="col-sm-6">
+        <button type="submit" style="float: right" class="btn btn-primary px-4" (click)="onBack()">
+            Back
+        </button>
+        <button type="submit" (click)="onSubmit()" style="float: right; margin-right: 20px"
+            class="btn btn-primary px-4">
+            Save
+        </button>
+    </div>
+</div>
+
+<div class="col-12" style="margin-top: 30px">
+    <nb-card class="custom-card">
+        <nb-card-body style="position: relative">
+            <form [formGroup]="hospitalForm">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label class="form-label">Name</label>
+                        <input class="form-control" placeholder="Enter Name" formControlName="name" nbInput />
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label class="form-label">Phone</label>
+                        <input class="form-control" pattern="[0-9]*" placeholder="Enter Phone Number"
+                            formControlName="contactNumber" (input)="onPhoneInput($event)" nbInput>
+                        <!-- <input class="form-control" placeholder="Enter Phone Number" formControlName="phone" nbInput /> -->
+                    </div>
+
+
+                </div>
+
+                <div class="row" style="margin-top: 30px">
+
+                    <div class="col-sm-6">
+                        <label class="form-label">Address</label>
+                        <input class="form-control" placeholder="Enter Addres" formControlName="address" nbInput />
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" placeholder="Enter Email" formControlName="email"
+                            nbInput />
+                        <div class="error-text"
+                            *ngIf="hospitalForm.get('email')?.hasError('required') && (hospitalForm.get('email')?.touched)">
+                            *Enter your email
+                        </div>
+                        <div class="error-text"
+                            *ngIf="hospitalForm.get('email')?.hasError('email') && hospitalForm.get('email')?.touched">
+                            *Invalid email format
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="row" style="margin-top: 30px">
+                    <div class="col-sm-6">
+                        <label class="form-label">Website</label>
+                        <input class="form-control" placeholder="Enter website" formControlName="website" nbInput />
+
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label">Total beds</label>
+                        <input class="form-control" placeholder="Enter beds count" formControlName="totalBeds"
+                            nbInput />
+
+                    </div>
+
+
+
+
+                </div>
+
+                <div class="row" style="margin-top: 30px">
+                    <div class="col-sm-6">
+                        <label class="form-label">Department</label>
+                        <nb-select placeholder="select department" fullWidth formControlName="departments"
+                            [clearable]="false" multiple>
+                            <nb-option *ngFor="let data of departments" [value]="data.name">{{
+                                data.name
+                                }}</nb-option>
+                        </nb-select>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label">Ipd</label>
+                        <nb-select placeholder="select ipd option" fullWidth formControlName="ipd" [clearable]="false">
+                            <nb-option *ngFor="let data of select" [value]="data.value">{{
+                                data.name
+                                }}</nb-option>
+                        </nb-select>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 30px">
+                    <div class="col-sm-6">
+                        <label class="form-label">Pharmacy</label>
+                        <nb-select placeholder="select pharmacy option" fullWidth formControlName="pharmacy"
+                            [clearable]="false">
+                            <nb-option *ngFor="let data of select" [value]="data.value">{{
+                                data.name
+                                }}</nb-option>
+                        </nb-select>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label">Lab</label>
+                        <nb-select placeholder="select lab option" fullWidth formControlName="lab" [clearable]="false">
+                            <nb-option *ngFor="let data of select" [value]="data.value">{{
+                                data.name
+                                }}</nb-option>
+                        </nb-select>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 30px">
+                    <div style="float: right" class="col-sm-6" *ngIf="isShowPaswordField">
+                        <label class="form-label">Password </label>
+                        <input [type]="showPassword ?   'password':'text'" class="form-control"
+                            placeholder="Enter Password" formControlName="password" nbInput />
+                        <button class="toggle_password" type="button" *ngIf="hospitalForm.get('password').value !== ''"
+                            (click)="togglePasswordVisibility()">
+                            <i class="fa" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"
+                                aria-hidden="true"></i>
+
+                        </button>
+
+                    </div>
+                    <div class="col-sm-2">
+                        <label>Profile Image</label><br />
+                        <div class="imageWidth">
+                            <label class="file">
+                                <input type="file" name="image" accept="image/*" id="exampleInputFile"
+                                    (change)="updateImage($event, 'Image')" formControlName="profileImage" />
+                                <span *ngIf="!profileImg||profileImg==null||profileImg=='undefined'"><img
+                                        src="assets/PlusIcon.png" height="50" /></span>
+                                <span *ngIf="profileImg&&profileImg!==null&&profileImg!='undefined'"><img
+                                        src="{{ profileImg }}" height="50" /></span>
+                                <i *ngIf="profileImg&&profileImg!==null&&profileImg!='undefined'"
+                                    (change)="updateImage($event, 1)" class="fa-regular fa-pen-to-square"></i>
+                            </label>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </nb-card-body>
+    </nb-card>
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" [fullScreen]="true" color="white" type="ball-circus"
+    [fullScreen]="true">
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>

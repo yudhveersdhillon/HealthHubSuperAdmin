@@ -1,0 +1,25 @@
+.toggle_password {
+  all: unset;
+  color: #000;
+  font-size: 13px;
+  margin-right: 10px;
+  margin-top: -19px;
+  float: right;
+  /* position: absolute; */
+  top: 79%;
+  right: 1rem;
+  line-height: 1;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+input[type="file"] {
+  display: none;
+  width: 0;
+  height: 0;
+    /* -webkit-appearance: none; */
+}
+
+.error-text{
+  color:red;
+}

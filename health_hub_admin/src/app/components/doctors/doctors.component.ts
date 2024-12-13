@@ -55,11 +55,11 @@ export class DoctorsComponent implements OnInit {
   }
 
   addAdmin() {
-    this.route.navigate(['/adminregister']);
+    this.route.navigate(['/adddoctor']);
   }
 
   editAdmin(id: any) {
-    this.route.navigate(['/adminedit/' + id]);
+    this.route.navigate(['/editdoctor/' + id]);
   }
 
   confirmDelete() {

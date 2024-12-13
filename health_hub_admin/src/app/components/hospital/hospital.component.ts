@@ -36,12 +36,12 @@ export class HospitalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getAdminList();
+    this.getHospitalList();
   }
-  getAdminList() {
+  getHospitalList() {
     this.spinner.show();
     this.service
-      .getRequest(ApiUrl.doctorList + `?page=${this.page}&word=${this.word}`)
+      .getRequest(ApiUrl.hospitalList + `?page=${this.page}&word=${this.word}`)
       .subscribe(
         (res: any) => {
           this.hospitals = res.response.data.adminList;
@@ -55,38 +55,22 @@ export class HospitalComponent implements OnInit {
   }
 
   addAdmin() {
-    this.route.navigate(['/adminregister']);
+    this.route.navigate(['/addhospital']);
   }
 
   editAdmin(id: any) {
-    this.route.navigate(['/adminedit/' + id]);
-  }
-
-  confirmDelete() {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'You will not be able to recover this data!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'Cancel',
-      reverseButtons: true,
-    }).then((result) => {
-      if (result.value) {
-        this.deleteAdmin(this.id);
-      }
-    });
+    this.route.navigate(['/edithospital/' + id]);
   }
 
   onFilterKeySearch() {
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
-      this.getAdminList();
+      this.getHospitalList();
     }, 1000);
   }
   pageChanged(event: any) {
     this.page = event;
-    this.getAdminList();
+    this.getHospitalList();
   }
 
   deleteAdmin(id: any) {
@@ -101,11 +85,11 @@ export class HospitalComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.spinner.show();
-        this.service.deleteRequest(`${ApiUrl.deleteDoctor}${id}`).subscribe(
+        this.service.deleteRequest(`${ApiUrl.deleteHospital}${id}`).subscribe(
           (res: any) => {
             // console.log(res, "delete")
             this.toastr.success(res.response.message);
-            this.getAdminList();
+            this.getHospitalList();
             this.spinner.hide();
           },
           (err) => {

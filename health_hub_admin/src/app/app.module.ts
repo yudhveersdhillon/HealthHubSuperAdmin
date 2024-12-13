@@ -12,6 +12,8 @@ import { HospitalComponent } from './components/hospital/hospital.component';
 import { DoctorsComponent } from './components/doctors/doctors.component';
 import { PatientComponent } from './components/patient/patient.component';
 import { LoginComponent } from './components/login/login.component';
+import { DoctorFormComponent } from './components/doctors/doctor-form/doctor-form.component';
+import { HospitalFormComponent } from './components/hospital/hospital-form/hospital-form.component';
 
 import {
   HTTP_INTERCEPTORS,
@@ -39,11 +41,13 @@ import {
   NbSidebarModule,
   NbSidebarService,
   NbThemeModule,
+  NbSelectModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSpinnerModule } from 'ngx-spinner';
+// import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -54,6 +58,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     DoctorsComponent,
     PatientComponent,
     LoginComponent,
+    DoctorFormComponent,
+    HospitalFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +74,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     NbIconModule,
     NbLayoutModule,
     NbInputModule,
+    NbCardModule,
     ToastrModule.forRoot({
       preventDuplicates: true,
       countDuplicates: true,
@@ -76,6 +83,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     }),
     NgxPaginationModule,
     NgxSpinnerModule,
+    NbSelectModule,
+    // NgSelectModule
   ],
   providers: [
     provideClientHydration(),

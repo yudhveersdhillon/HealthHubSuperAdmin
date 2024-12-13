@@ -7,41 +7,42 @@
 
                         <div class="col-md-6 col-lg-12 d-flex align-items-center">
                             <div class="card-body p-4 p-lg-5 text-black">
-              
 
-                                <div class="login-logo mb-3 pb-1">
-                                    
-                                    <img src="assets/Group10.jpg" height="31" />
+
+                                <div class="login-logo mb-3 pb-1 ">
+                                    <img src="assets/doctorlogo.jpeg" style="height: 100px;" />
                                 </div>
 
 
-                                <form  (ngSubmit)="onLoginSubmit(f)" #f="ngForm" >
+                                <form (ngSubmit)="onLoginSubmit(f)" #f="ngForm">
 
-                                    
+
 
                                     <div data-mdb-input-init class="form-outline mb-4">
-                                        <label class="form-label" >Email</label>
-                                        <input type="text" placeholder="Email" id="name" name="email"  [(ngModel)]="form.email" class="form-control form-control-lg"
-                                             />
-                                       
+                                        <label class="form-label">Email</label>
+                                        <input type="text" placeholder="Email" id="name" name="email"
+                                            [(ngModel)]="form.email" class="form-control form-control-lg" />
+
                                     </div>
 
                                     <div data-mdb-input-init class="form-outline mb-4">
-                                        <label class="form-label" >Password</label>
-                                        <input type="password"  placeholder="Password" id="password" name="password" [(ngModel)]="form.password"  class="form-control form-control-lg"
-                                            />
-                                      
+                                        <label class="form-label">Password</label>
+                                        <input type="password" placeholder="Password" id="password" name="password"
+                                            [(ngModel)]="form.password" class="form-control form-control-lg" />
+
                                     </div>
 
                                     <div class="pt-1 d-grid mb-4">
                                         <button data-mdb-button-init data-mdb-ripple-init
-                                            class="btn btn-dark btn-lg btn-block btn-primary" type="submit"
-                                           >Log In</button>
+                                            class="btn btn-dark btn-lg btn-block btn-primary" type="submit">Log
+                                            In</button>
                                     </div>
                                     <div class="pt-1 d-grid mb-4" class="errorText">
-                                    <span *ngIf="loginError"> The email or password you’ve entered is incorrect</span>
-                                     <span *ngIf="submitButton && (!form.email || !form.password)"> Please Enter Email and password</span>
-                                     <!-- <span *ngIf="submitButton && !form.email"> Please Enter Email</span>
+                                        <span *ngIf="loginError"> The email or password you’ve entered is
+                                            incorrect</span>
+                                        <span *ngIf="submitButton && (!form.email || !form.password)"> Please Enter
+                                            Email and password</span>
+                                        <!-- <span *ngIf="submitButton && !form.email"> Please Enter Email</span>
                                      <span *ngIf="submitButton && !form.password"> Please Enter Password</span> -->
 
                                     </div>
