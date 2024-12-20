@@ -27,6 +27,8 @@ export class DoctorsComponent implements OnInit {
   word: any = '';
   count: number = 5;
   timeout: any = null;
+  hospitaldata: any;
+  selectedHospitalId: any = '';
 
   constructor(
     private service: ApiService,
@@ -36,16 +38,20 @@ export class DoctorsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getAdminList();
+    this.getDoctorList();
+    this.getHospitaldropdown();
   }
-  getAdminList() {
+  getDoctorList() {
     this.spinner.show();
     this.service
-      .getRequest(ApiUrl.doctorList + `?page=${this.page}&word=${this.word}`)
+      .getRequest(
+        ApiUrl.doctorList +
+          `?page=${this.page}&word=${this.word}&hospitalId=${this.selectedHospitalId}`
+      )
       .subscribe(
         (res: any) => {
-          this.doctors = res.response.data.adminList;
-          this.total = res.response.data.adminCount;
+          this.doctors = res.response.data.doctorList;
+          this.total = res.response.data.doctorCount;
           this.spinner.hide();
         },
         (err) => {
@@ -81,12 +87,12 @@ export class DoctorsComponent implements OnInit {
   onFilterKeySearch() {
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
-      this.getAdminList();
+      this.getDoctorList();
     }, 1000);
   }
   pageChanged(event: any) {
     this.page = event;
-    this.getAdminList();
+    this.getDoctorList();
   }
 
   deleteAdmin(id: any) {
@@ -105,7 +111,7 @@ export class DoctorsComponent implements OnInit {
           (res: any) => {
             // console.log(res, "delete")
             this.toastr.success(res.response.message);
-            this.getAdminList();
+            this.getDoctorList();
             this.spinner.hide();
           },
           (err) => {
@@ -114,5 +120,18 @@ export class DoctorsComponent implements OnInit {
         );
       }
     });
+  }
+  onHospitalSelection() {
+    // console.log(this.storeId, "Selected storeId");
+    this.getDoctorList();
+  }
+
+  getHospitaldropdown() {
+    this.service
+      .getRequest(`${ApiUrl.hospitalDropdown}`)
+      .subscribe((res: any) => {
+        this.hospitaldata = res.response.data;
+        // console.log(this.hospitaldata, 'data');
+      });
   }
 }

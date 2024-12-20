@@ -17,9 +17,10 @@ input[type="file"] {
   display: none;
   width: 0;
   height: 0;
-    /* -webkit-appearance: none; */
+  /* -webkit-appearance: none; */
 }
 
-.error-text{
-  color:red;
+.error-text {
+  color: red;
 }
+

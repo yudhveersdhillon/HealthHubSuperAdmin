@@ -177,8 +177,6 @@ export class HospitalFormComponent {
       formData.append('ipd', this.hospitalForm.get('ipd').value);
       formData.append('pharmacy', this.hospitalForm.get('pharmacy').value);
       formData.append('lab', this.hospitalForm.get('lab').value);
-      // formData.append('status', this.hospitalForm.get('status').value);
-      // formData.append('role', this.hospitalForm.get('role').value);
       formData.append('profileImage', this.profileFile);
 
       this.service

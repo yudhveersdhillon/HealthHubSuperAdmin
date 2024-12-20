@@ -1,10 +1,16 @@
 <div class="row">
-    <div class="col-6">
+    <div class="col-sm-5">
         <h2>Doctors</h2>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-3">
         <input style="float: right; background-color: white" type="text" placeholder="Search Text" nbInput
             [(ngModel)]="word" (keyup)="onFilterKeySearch()" />
+    </div>
+    <div class="col-sm-2">
+        <nb-select placeholder="Search by hospital"  [(ngModel)]="selectedHospitalId"
+            (ngModelChange)="onHospitalSelection()">
+            <nb-option *ngFor="let data of hospitaldata" [value]="data._id">{{ data.name }}</nb-option>
+        </nb-select>
     </div>
     <div class="col-sm-2">
         <button type="button" class="btn btn-primary px-4" style="float: right;" (click)="addAdmin()"> Add Doctor

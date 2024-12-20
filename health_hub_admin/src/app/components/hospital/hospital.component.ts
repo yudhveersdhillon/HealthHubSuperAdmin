@@ -99,4 +99,5 @@ export class HospitalComponent implements OnInit {
       }
     });
   }
+
 }
