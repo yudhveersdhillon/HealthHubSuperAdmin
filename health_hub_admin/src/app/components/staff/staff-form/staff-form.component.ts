@@ -7,37 +7,37 @@ import { ApiUrl } from '../../../services/apiUrls';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from '../../../../environments/environment';
-// import { MatDialog } from '@angular/material/dialog';
-// import { AdminChangepasswordComponent } from '../admin-changepassword/admin-changepassword.component';
+import { NbDateService } from '@nebular/theme';
+
 @Component({
-  selector: 'app-doctor-form',
-  templateUrl: './doctor-form.component.html',
-  styleUrl: './doctor-form.component.css',
+  selector: 'app-staff-form',
+  templateUrl: './staff-form.component.html',
+  styleUrl: './staff-form.component.css',
 })
-export class DoctorFormComponent implements OnInit {
+export class StaffFormComponent implements OnInit {
   editForm: any;
-  doctorForm: any = {};
+  staffForm: any = {};
   role: any = localStorage.getItem('role');
   id: any;
   selectStatus: any;
   imageSrc: string | undefined;
   profileImg: any;
-  // image: any;
+  image: any;
   profileFile: any;
-  docSignImg: any;
-  docSignFile: any;
   isShowPaswordField: any = true;
   storeData: any;
   showPassword = true;
   hospitaldata: any;
+  max: any;
   // location:any = {type:'Point'}
   data = [
     { name: 'Active', status: 1 },
     { name: 'Inactive', status: 0 },
   ];
   roledata = [
-    { name: 'Admin', role: 'admin' },
-    { name: 'Manager', role: 'manager' },
+    { name: 'Staff', role: 'staff' },
+    { name: 'Nurse', role: 'nurse' },
+    { name: 'Receptionist', role: 'receptionist' },
   ];
 
   constructor(
@@ -46,33 +46,35 @@ export class DoctorFormComponent implements OnInit {
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
     private page: Location,
-    private router: ActivatedRoute // private dialog: MatDialog,
+    private router: ActivatedRoute,
+    private dateService: NbDateService<Date>
   ) {
     this.router.params.subscribe((route) => {
       this.id = route['id'];
     });
+    this.max = this.dateService.today();
   }
 
   ngOnInit() {
     this.getHospitallist();
-    this.doctorForm = new FormGroup({
+    this.staffForm = new FormGroup({
       name: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),
+      birthdate: new FormControl('', Validators.required),
+      age: new FormControl('', Validators.required),
+      countryCode: new FormControl('+91', Validators.required),
       phone: new FormControl('', Validators.required),
+      role: new FormControl('', Validators.required),
+      department: new FormControl('', Validators.required),
       status: new FormControl(1, Validators.required),
       specialty: new FormControl('', Validators.required),
-      licenseNumber: new FormControl('', Validators.required),
-      yearsOfExperience: new FormControl('', Validators.required),
       hospitalId: new FormControl('', Validators.required),
-      department: new FormControl('', Validators.required),
       address: new FormControl('', Validators.required),
       profileImage: new FormControl(),
-      doctorSign: new FormControl(),
     });
-    // If id exists, you're editing, so set password field visibility to false
     if (this.id) {
-      this.getDoctorById();
+      this.getStaffById();
       this.isShowPaswordField = false;
     } else {
       this.isShowPaswordField = true;
@@ -87,44 +89,38 @@ export class DoctorFormComponent implements OnInit {
 
   updateImage(event: any, name: any) {
     let files = event.target.files[0];
+    // console.log(files, "file")
     const reader = new FileReader();
-
     reader.onload = (e: any) => {
-      if (name === 'Sign') {
-        this.docSignImg = e.target.result;
-        this.docSignFile = files;
-      } else {
-        this.profileImg = e.target.result;
-        this.profileFile = files;
-      }
+      this.profileImg = e.target.result;
+      this.profileFile = files;
     };
-
     reader.readAsDataURL(files);
   }
 
   removeImage(name: any) {
     this.profileImg = '';
-    this.doctorForm.patchValue({
+    this.staffForm.patchValue({
       profileImage: '',
     });
   }
 
   get buttonTitle() {
-    return this.id ? 'Edit Doctor' : 'Add Doctor';
+    return this.id ? 'Edit Staff' : 'Add Staff';
   }
   getHospitallist() {
-    this.isShowPaswordField = false;
+    // this.isShowPaswordField = false;
     this.service
       .getRequest(`${ApiUrl.hospitalDropdown}`)
       .subscribe((res: any) => {
         this.hospitaldata = res.response.data;
-        console.log(this.data, 'data');
+        console.log(this.hospitaldata, 'data');
       });
   }
 
-  getDoctorById() {
+  getStaffById() {
     this.service
-      .getRequest(`${ApiUrl.getDoctorById}${this.id}`)
+      .getRequest(`${ApiUrl.getStaffById}${this.id}`)
       .subscribe((res: any) => {
         if (res.response.success == true) {
           if (
@@ -136,24 +132,14 @@ export class DoctorFormComponent implements OnInit {
           } else {
             this.profileImg = `${environment.imgUrl}${res.response.data.profileImage}`;
           }
-          if (
-            res.response?.data?.doctorSign == null ||
-            res.response?.data?.doctorSign == 'undefined'
-          ) {
-            this.docSignImg = res.response?.data?.doctorSign;
-            // console.log(this.profileImg, 'image');
-          } else {
-            this.docSignImg = `${environment.imgUrl}${res.response.data.doctorSign}`;
-          }
 
-          this.doctorForm.patchValue({
+          this.staffForm.patchValue({
             name: res.response.data?.name,
             email: res.response.data?.email,
             password: res.response.data?.password,
             phone: res.response.data?.phone,
-            specialty: res.response.data?.specialty,
-            licenseNumber: res.response.data?.licenseNumber,
-            yearsOfExperience: res.response.data?.yearsOfExperience,
+            birthdate: res.response.data?.birthdate,
+            age: res.response.data?.age,
             hospitalId: res.response.data?.hospitalId,
             department: res.response.data?.department,
             address: res.response.data?.address,
@@ -171,61 +157,44 @@ export class DoctorFormComponent implements OnInit {
       if (this.profileFile) {
         formData.append('profileImage', this.profileFile);
       }
-      if (this.docSignFile) {
-        formData.append('doctorSign', this.docSignFile);
-      }
-      formData.append('name', this.doctorForm.get('name').value);
-      formData.append('email', this.doctorForm.get('email').value);
-      formData.append('password', this.doctorForm.get('password').value);
-      formData.append('phone', this.doctorForm.get('phone').value);
-      formData.append('status', this.doctorForm.get('status').value);
-      formData.append('specialty', this.doctorForm.get('specialty').value);
-      formData.append(
-        'licenseNumber',
-        this.doctorForm.get('licenseNumber').value
-      );
-      formData.append(
-        'yearsOfExperience',
-        this.doctorForm.get('yearsOfExperience').value
-      );
-      formData.append('hospitalId', this.doctorForm.get('hospitalId').value);
-      formData.append('department', this.doctorForm.get('department').value);
-      formData.append('address', this.doctorForm.get('address').value);
+      formData.append('name', this.staffForm.get('name').value);
+      formData.append('email', this.staffForm.get('email').value);
+      formData.append('password', this.staffForm.get('password').value);
+      formData.append('phone', this.staffForm.get('phone').value);
+      formData.append('status', this.staffForm.get('status').value);
+      formData.append('birthdate', this.staffForm.get('birthdate').value);
+      formData.append('age', this.staffForm.get('age').value);
+      formData.append('hospitalId', this.staffForm.get('hospitalId').value);
+      formData.append('department', this.staffForm.get('department').value);
+      formData.append('address', this.staffForm.get('address').value);
+      formData.append('role', this.staffForm.get('role').value);
 
       this.service
-        .putRequest(`${ApiUrl.editDoctor}${this.id}`, formData)
+        .putRequest(`${ApiUrl.editStaff}${this.id}`, formData)
         .subscribe((res: any) => {
           this.toastr.success(res.response.message);
-          this.route.navigate(['/doctors']);
+          this.route.navigate(['/staff']);
         });
     } else {
       this.spinner.show();
       var formData = new FormData();
-      formData.append('name', this.doctorForm.get('name').value);
-      formData.append('email', this.doctorForm.get('email').value);
-      formData.append('password', this.doctorForm.get('password').value);
-      formData.append('phone', this.doctorForm.get('phone').value);
-      formData.append('status', this.doctorForm.get('status').value);
-      formData.append('specialty', this.doctorForm.get('specialty').value);
-      formData.append(
-        'licenseNumber',
-        this.doctorForm.get('licenseNumber').value
-      );
-      formData.append(
-        'yearsOfExperience',
-        this.doctorForm.get('yearsOfExperience').value
-      );
-      formData.append('hospitalId', this.doctorForm.get('hospitalId').value);
-      formData.append('department', this.doctorForm.get('department').value);
-      formData.append('address', this.doctorForm.get('address').value);
+      formData.append('name', this.staffForm.get('name').value);
+      formData.append('email', this.staffForm.get('email').value);
+      formData.append('password', this.staffForm.get('password').value);
+      formData.append('phone', this.staffForm.get('phone').value);
+      formData.append('status', this.staffForm.get('status').value);
+      formData.append('birthdate', this.staffForm.get('birthdate').value);
+      formData.append('age', this.staffForm.get('age').value);
+      formData.append('hospitalId', this.staffForm.get('hospitalId').value);
+      formData.append('department', this.staffForm.get('department').value);
+      formData.append('address', this.staffForm.get('address').value);
       formData.append('profileImage', this.profileFile);
-      formData.append('doctorSign', this.docSignFile);
 
-      this.service.postRequest(ApiUrl.addDoctor, formData).subscribe(
+      this.service.postRequest(ApiUrl.addStaff, formData).subscribe(
         (res: any) => {
           // console.log(res, "res")
           this.toastr.success(res.response.message);
-          this.route.navigate(['/doctors']);
+          this.route.navigate(['/staff']);
           this.spinner.hide();
         },
         (err) => {
@@ -233,13 +202,13 @@ export class DoctorFormComponent implements OnInit {
         }
       );
     }
-    // console.log(this.doctorForm)
+    // console.log(this.staffForm)
   }
 
   onPhoneInput(event: any) {
     const input = event.target as HTMLInputElement;
     input.value = input.value.replace(/[^0-9]/g, '').slice(0, 20);
-    this.doctorForm.get('phone')?.setValue(input.value);
+    this.staffForm.get('phone')?.setValue(input.value);
   }
 
   togglePasswordVisibility() {
@@ -255,5 +224,21 @@ export class DoctorFormComponent implements OnInit {
 
   onBack() {
     this.page.back();
+  }
+  calculateAge(dateOfBirth: Date) {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+    this.staffForm.get('age').setValue(age);
+    this.staffForm.patchValue({
+      birthdate: birthDate,
+    });
   }
 }

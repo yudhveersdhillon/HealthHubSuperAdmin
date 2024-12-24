@@ -9,6 +9,8 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './auth.guard';
 import { DoctorFormComponent } from './components/doctors/doctor-form/doctor-form.component';
 import { HospitalFormComponent } from './components/hospital/hospital-form/hospital-form.component';
+import { StaffComponent } from './components/staff/staff.component';
+import { StaffFormComponent } from './components/staff/staff-form/staff-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -62,6 +64,24 @@ const routes: Routes = [
       {
         path: 'patients',
         component: PatientComponent,
+        pathMatch: 'full',
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'staff',
+        component: StaffComponent,
+        pathMatch: 'full',
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'addstaff',
+        component: StaffFormComponent,
+        pathMatch: 'full',
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'editstaff/:id',
+        component: StaffFormComponent,
         pathMatch: 'full',
         canActivate: [AuthGuard],
       },

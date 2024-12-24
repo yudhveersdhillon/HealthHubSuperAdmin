@@ -16,7 +16,7 @@
 <div class="col-12" style="margin-top: 30px">
     <nb-card class="custom-card">
         <nb-card-body style="position: relative">
-            <form [formGroup]="doctorForm">
+            <form [formGroup]="staffForm">
                 <div class="row">
                     <div class="col-sm-6">
                         <label class="form-label">Name</label>
@@ -28,13 +28,26 @@
                         <input type="email" class="form-control" placeholder="Enter Email" formControlName="email"
                             nbInput />
                         <div class="error-text"
-                            *ngIf="doctorForm.get('email')?.hasError('required') && (doctorForm.get('email')?.touched)">
+                            *ngIf="staffForm.get('email')?.hasError('required') && (staffForm.get('email')?.touched)">
                             *Enter your email
                         </div>
                         <div class="error-text"
-                            *ngIf="doctorForm.get('email')?.hasError('email') && doctorForm.get('email')?.touched">
+                            *ngIf="staffForm.get('email')?.hasError('email') && staffForm.get('email')?.touched">
                             *Invalid email format
                         </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 30px">
+                    <div class="col-sm-6">
+                        <label class="form-label">Date Of Birth</label>
+                        <input placeholder="Enter Date Of Birth " nbInput class="form-control" [nbDatepicker]="picker"
+                            [value]="staffForm.get('birthdate').value | date :'dd/MM/yyyy'">
+                        <nb-datepicker #picker format="dd/MM/yyyy" (dateChange)="calculateAge($event)"
+                            [max]="max"></nb-datepicker>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label">Age</label>
+                        <input class="form-control" readonly placeholder="Age" formControlName="age" nbInput />
                     </div>
                 </div>
 
@@ -57,30 +70,33 @@
 
                 <div class="row" style="margin-top: 30px">
                     <div class="col-sm-6">
-                        <label class="form-label">Specialty</label>
-                        <input class="form-control" placeholder="Enter specialty" formControlName="specialty" nbInput />
+                        <label class="form-label">Role</label>
+                        <nb-select fullWidth formControlName="role" placeholder="Select Role" [clearable]="false">
+                            <nb-option *ngFor="let data of roledata" [value]="data.role">{{ data.name }}</nb-option>
+                        </nb-select>
                     </div>
-                    <div class="col-sm-6">
-                        <label class="form-label">Licence No.</label>
-                        <input class="form-control" placeholder="Enter licence number" formControlName="licenseNumber"
-                            nbInput />
-                    </div>
-                </div>
-
-                <div class="row" style="margin-top: 30px">
-                    <div class="col-sm-6">
-                        <label class="form-label">Experience</label>
-                        <input class="form-control" placeholder="Enter years of experience"
-                            formControlName="yearsOfExperience" nbInput />
-                    </div>
-
                     <div class="col-sm-6">
                         <label class="form-label">Status</label>
                         <nb-select fullWidth formControlName="status" [clearable]="false">
                             <nb-option *ngFor="let status of data" [value]="status.status">{{ status.name }}</nb-option>
                         </nb-select>
                     </div>
+
                 </div>
+                <!-- 
+                <div class="row" style="margin-top: 30px">
+                    <div class="col-sm-6">
+                        <label class="form-label">Licence No.</label>
+                        <input class="form-control" placeholder="Enter licence number" formControlName="licenseNumber"
+                            nbInput />
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label">Experience</label>
+                        <input class="form-control" placeholder="Enter years of experience"
+                            formControlName="yearsOfExperience" nbInput />
+                    </div>
+
+                </div> -->
 
                 <div class="row" style="margin-top: 30px">
                     <div class="col-sm-6">
@@ -101,7 +117,7 @@
                         <label class="form-label">Password</label>
                         <input [type]="showPassword ? 'password' : 'text'" class="form-control"
                             placeholder="Enter Password" formControlName="password" nbInput />
-                        <button class="toggle_password" type="button" *ngIf="doctorForm.get('password').value !== ''"
+                        <button class="toggle_password" type="button" *ngIf="staffForm.get('password').value !== ''"
                             (click)="togglePasswordVisibility()">
                             <i class="fa" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"
                                 aria-hidden="true"></i>
@@ -120,25 +136,6 @@
                                     <img src="{{ profileImg }}" height="50" />
                                 </span>
                                 <i *ngIf="profileImg && profileImg !== null && profileImg !== 'undefined'"
-                                    (change)="updateImage($event, 1)" class="fa-regular fa-pen-to-square"></i>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 30px">
-                    <div class="col-sm-2">
-                        <label>Upload signature</label>
-                        <div class="imageWidth mt-2">
-                            <label class="file">
-                                <input type="file" name="sign" accept="sign/*" id="exampleInputFile"
-                                    (change)="updateImage($event, 'Sign')" formControlName="doctorSign" />
-                                <span *ngIf="!docSignImg || docSignImg == null || docSignImg == 'undefined'">
-                                    <img src="assets/PlusIcon.png" height="50" />
-                                </span>
-                                <span *ngIf="docSignImg && docSignImg !== null && docSignImg !== 'undefined'">
-                                    <img src="{{ docSignImg }}" height="50" />
-                                </span>
-                                <i *ngIf="docSignImg && docSignImg !== null && docSignImg !== 'undefined'"
                                     (change)="updateImage($event, 1)" class="fa-regular fa-pen-to-square"></i>
                             </label>
                         </div>

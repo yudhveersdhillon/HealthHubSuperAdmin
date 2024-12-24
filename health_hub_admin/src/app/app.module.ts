@@ -14,6 +14,8 @@ import { PatientComponent } from './components/patient/patient.component';
 import { LoginComponent } from './components/login/login.component';
 import { DoctorFormComponent } from './components/doctors/doctor-form/doctor-form.component';
 import { HospitalFormComponent } from './components/hospital/hospital-form/hospital-form.component';
+import { StaffComponent } from './components/staff/staff.component';
+import { StaffFormComponent } from './components/staff/staff-form/staff-form.component';
 
 import {
   HTTP_INTERCEPTORS,
@@ -47,6 +49,7 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NbMomentDateModule } from '@nebular/moment';
 // import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
@@ -60,6 +63,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     LoginComponent,
     DoctorFormComponent,
     HospitalFormComponent,
+    StaffComponent,
+    StaffFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,6 +89,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     NgxPaginationModule,
     NgxSpinnerModule,
     NbSelectModule,
+    NbDatepickerModule.forRoot(),
+    NbMomentDateModule,
     // NgSelectModule
   ],
   providers: [

@@ -55,8 +55,8 @@ export class LayoutComponent implements OnInit {
       link: '/doctors',
     },
     {
-      title: 'Patients',
-      link: '/patients',
+      title: 'Staff',
+      link: '/staff',
     },
     {
       title: 'Log Out',
