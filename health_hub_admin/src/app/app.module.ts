@@ -50,6 +50,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NbMomentDateModule } from '@nebular/moment';
+import { SubscribedHospitalComponent } from './components/subscribed-hospital/subscribed-hospital.component';
 // import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
@@ -65,6 +66,7 @@ import { NbMomentDateModule } from '@nebular/moment';
     HospitalFormComponent,
     StaffComponent,
     StaffFormComponent,
+    SubscribedHospitalComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-sm-5">
-        <h2>Doctors</h2>
+        <h2>Subscribed Hospitals</h2>
     </div>
     <div class="col-sm-3">
         <input style="float: right; background-color: white" type="text" placeholder="Search Text" nbInput
@@ -13,7 +13,7 @@
         </nb-select>
     </div>
     <div class="col-sm-2">
-        <button type="button" class="btn btn-primary px-4" style="float: right;" (click)="addAdmin()"> Add Doctor
+        <button type="button" class="btn btn-primary px-4" style="float: right;" (click)="addStaff()"> Add Staff
         </button>
     </div>
 
@@ -29,21 +29,23 @@
                         <th scope="col">Email</th>
                         <th scope="col">Phone No.</th>
                         <th scope="col">Profile Image</th>
+                        <th scope="col">Role</th>
                         <th scope="col">Action</th>
                         <!-- <th scope="col">Store Id</th> -->
 
                     </tr>
                 </thead>
-                <tbody *ngIf="doctors && doctors.length > 0; else noDataTemplate">
+                <tbody *ngIf="staff && staff.length > 0; else noDataTemplate">
                     <tr
-                        *ngFor="let user of doctors | paginate: { itemsPerPage: 10, currentPage: page, totalItems: total }; let i = index">
+                        *ngFor="let user of staff | paginate: { itemsPerPage: 10, currentPage: page, totalItems: total }; let i = index">
                         <td>{{ (page - 1) * count + i + 1 }}</td>
                         <td>{{ user.name }}</td>
                         <td>{{ user.email }}</td>
                         <td>{{ user.phone }}</td>
                         <td><img [src]="imagePath + user.profileImage" height="50" /></td>
+                        <td>{{ user.role }}</td>
                         <td>
-                            <nb-icon style="cursor: pointer;" (click)="editAdmin(user._id)" class="right"
+                            <nb-icon style="cursor: pointer;" (click)="editStaff(user._id)" class="right"
                                 icon="edit-outline"></nb-icon>
                             <nb-icon style="cursor: pointer;" (click)="deleteAdmin(user._id)" class="right deleteIcon"
                                 icon="trash-outline"></nb-icon>
@@ -65,3 +67,4 @@
     [fullScreen]="true">
     <p style="color: white"> Loading... </p>
 </ngx-spinner>
+

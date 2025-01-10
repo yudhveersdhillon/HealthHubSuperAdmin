@@ -85,8 +85,10 @@
                 <div class="row" style="margin-top: 30px">
                     <div class="col-sm-6">
                         <label class="form-label">Department</label>
-                        <input class="form-control" placeholder="Enter department" formControlName="department"
-                            nbInput />
+                        <nb-select fullWidth placeholder="Select department" formControlName="department"
+                            [clearable]="false">
+                            <nb-option *ngFor="let data of departments" [value]="data.name">{{ data.name }}</nb-option>
+                        </nb-select>
                     </div>
                     <div class="col-sm-6">
                         <label class="form-label">Address</label>
@@ -95,7 +97,6 @@
                 </div>
 
                 <div class="row" style="margin-top: 30px">
-
 
                     <div class="col-sm-6" *ngIf="isShowPaswordField">
                         <label class="form-label">Password</label>

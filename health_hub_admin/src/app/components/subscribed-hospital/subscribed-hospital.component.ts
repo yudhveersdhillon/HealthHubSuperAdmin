@@ -8,11 +8,11 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-staff',
-  templateUrl: './staff.component.html',
-  styleUrl: './staff.component.css',
+  selector: 'app-subscribed-hospital',
+  templateUrl: './subscribed-hospital.component.html',
+  styleUrl: './subscribed-hospital.component.css',
 })
-export class StaffComponent implements OnInit {
+export class SubscribedHospitalComponent implements OnInit {
   id: any;
   staff: any;
   profileImg: any;
